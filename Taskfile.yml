@@ -1,0 +1,25 @@
+version: '3'
+
+dotenv: ['.env']
+
+tasks:
+  build:
+    desc: "Start an application"
+    cmds:
+      - docker-compose up -d
+      - go run cmd/api/main.go
+  
+  migration:generate:
+    desc: "Generate migration"
+    cmds:
+      - migrate create -ext sql -dir migrations -seq {{.CLI_ARGS}}
+  
+  migrate:up:
+    desc: "Run migrations"
+    cmds:
+      - migrate -path migrations -database "{{.POSTRES_URL}}" up
+
+  migrate:down:
+    desc: "Undone last migration"
+    cmds:
+      - migrate -path migrations -database "{{.POSTRES_URL}}" down 1
