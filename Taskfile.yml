@@ -9,7 +9,7 @@ tasks:
       - docker-compose up -d
       - go run cmd/api/main.go
   
-  migration:generate:
+  migrate:generate:
     desc: "Generate migration"
     cmds:
       - migrate create -ext sql -dir migrations -seq {{.CLI_ARGS}}
